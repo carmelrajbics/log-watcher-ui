@@ -1,0 +1,27 @@
+.stack-trace {
+    padding: 19px;
+}
+
+.stack-trace .content {
+    padding-top: 5px;
+    background-color: rgb(242, 242, 118);
+}
+
+.mat-typography span {
+    font-weight: bold;
+    line-height: 1.5;
+    color: #7e4203;
+}
+
+.mat-typography h3 {
+    font-weight: bold;
+    line-height: 1.5;
+    color: #7e4203;
+}
+
+.link-text {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer; 
+  }
+  

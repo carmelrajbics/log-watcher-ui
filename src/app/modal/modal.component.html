@@ -1,0 +1,51 @@
+<h2 style="color: #1976d2;" mat-dialog-title>Stack Trace</h2>
+<mat-dialog-content class="mat-typography">
+    <div class="error-details">
+        <table>
+            <tbody>
+                <tr>
+                    <td><span>Application Source</span> </td>
+                    <td>{{data.source}}</td>
+                </tr>
+                <tr>
+                    <td><span>Error Code</span> </td>
+                    <td>{{data.errorCode}}</td>
+                </tr>
+                <tr>
+                    <td><span> Method Type</span> </td>
+                    <td>{{data.httpMethod}}</td>
+                </tr>
+                <tr *ngIf="data.source === 'EOL'">
+                    <td><span>Which step in EOL this error occured?</span></td>
+                    <td>{{data.eolStep}}</td>
+                </tr>
+                <tr>
+                    <td><span>Status</span></td>
+                    <td>{{data.status}}</td>
+                </tr>
+                <tr>
+                    <td><span>Order Key(IncId,SqlId)</span></td>
+                    <td>({{data.orderIncId}},{{data.orderSqlId}})</td>
+                </tr>
+                <tr>
+                    <td><span>URL</span></td>
+                    <td class="link-text">{{data.url}}</td>
+                </tr>
+                <tr>
+                    <td><span>User Email</span></td>
+                    <td>{{data.userEmail}}</td>
+                </tr>
+                <tr>
+                    <td><span>Date Time</span></td>
+                    <td>{{data.dateTime | date:'dd-MM-yyyy HH:mm'}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <h3>Message</h3>
+        <p>{{data.message}} </p>
+
+        <h3>Stack Trace</h3>
+        <p style="background-color: rgb(234, 234, 75);">{{data.stackTrace}}</p>
+    </div>
+</mat-dialog-content>

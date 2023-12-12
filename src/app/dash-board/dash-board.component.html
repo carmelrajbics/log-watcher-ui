@@ -1,0 +1,121 @@
+<!-- =======================Main========================= -->
+<mat-progress-bar *ngIf="showProgress" mode="indeterminate"></mat-progress-bar>
+
+<div class="main">
+    <div class="topbar">
+        <div class="toggle" (click)="toggleMenu()">
+            <ion-icon name="menu-outline"></ion-icon>
+        </div>
+    </div>
+
+    <!-- ====================== Cards=====================-->
+    <div class="cardBox">
+        <div class="card">
+            <div class="pending">
+                <div class="numbers pending" style="color:red">{{totalErrorCount}}</div>
+                <div class="cardName" style="color:red">Total Errors</div>
+            </div>
+            <div class="iconBx">
+                <ion-icon style="color:red" name="bug-outline"></ion-icon>
+            </div>
+        </div>
+
+        <div class="card">
+            <div>
+                <div class="numbers" style="color: #28A745;">{{resolvedErrorCount}}</div>
+                <div class="cardName" style="color: #28A745;">Resolved Errors</div>
+            </div>
+            <div class="iconBx">
+                <!-- <ion-icon style="color: #28A745;" name="bar-chart-outline"></ion-icon> -->
+                <ion-icon style="color: #28A745;" name="checkmark-done-circle-outline"></ion-icon>
+            </div>
+        </div>
+
+        <div class="card">
+            <div>
+                <div class="numbers" style="color: #EE7D11;">{{inProgressErrorCount}}</div>
+                <div class="cardName" style="color: #EE7D11;">In Progress Errors</div>
+            </div>
+            <div class="iconBx">
+                <ion-icon style="color: #EE7D11;" name="code-working-outline"></ion-icon>
+            </div>
+        </div>
+
+        <div class="card">
+            <div>
+                <div class="numbers">{{pendingErrorsCount}}</div>
+                <div class="cardName" style="color: #1976d2">Pending Errors</div>
+            </div>
+            <div class="iconBx">
+                <ion-icon style="color: #1976d2" name="bar-chart-outline"></ion-icon>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== Error Details============================ -->
+    <div class="details">
+        <div class="recentOrders">
+            <div class="cardHeader">
+                <h2>Recent Errors</h2>
+                <a href="/log-details" class="btn">View All</a>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <td>Source</td>
+                        <td>Error Code</td>
+                        <td>Message</td>
+                        <td>Stack Trace</td>
+                        <td>Status</td>
+                        <td>Date Time</td>
+                        <td>Download</td>
+                        <td>#</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let error of logDetails">
+                        <td>{{error.source}}</td>
+                        <td style="width: 10%;">{{error.errorCode}}</td>
+                        <td style="width: 30%;">{{error.message}}</td>
+                        <td>
+                            <ion-icon class="downloadIcon" (click)="openModal(error)"
+                                title="Click here to see more details" name="document-text-outline"></ion-icon>
+                        </td>
+                        <td style="width: 10%;">
+                            <span class="status" [class.pending]="error.status === 'Pending'"
+                                [class.resolved]="error.status === 'Resolved'"
+                                [class.inProgress]="error.status === 'In Progress'">
+                                {{ error.status }}</span>
+
+                        </td>
+                        <td style="width: 12%;">{{error.dateTime | date:'dd-MM-yyyy HH:mm' }}</td>
+                        <td>
+                            <ion-icon class="downloadIcon" *ngIf="error.canDownloadDb" (click)="download(error)"
+                                title="Click here to download database to analye further"
+                                name="arrow-down-circle-outline"></ion-icon>
+                        </td>
+                        <td>
+                            <ion-icon class="downloadIcon" title="Click here create bug to the TFS board"
+                                (click)="createBug(error)" name="bug-outline"></ion-icon>
+                            <!-- <ion-icon class="action-edit" name="create-outline"></ion-icon> -->
+
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="dropbtn">Options</button>
+                                <div class="dropdown-content">
+                                    <a (click)="changeStatus('In Progress')">In Progress</a>
+                                    <a (click)="changeStatus('Pending')">Pending</a>
+                                    <a (click)="changeStatus('Delivered')">Delivered</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,65 @@
+<mat-progress-bar *ngIf="showProgress" mode="indeterminate"></mat-progress-bar>
+<div style="padding-left: 19%;">
+    <div style="padding-left: 2%;">
+        <h2 style="color: #1976d2;padding-top: 2px;" mat-dialog-title>List of Errors</h2>
+    </div>
+    <!-- ==================== Error Details============================ -->
+    <div class="details">
+        <div class="recentOrders">
+            <table>
+                <thead>
+                    <tr>
+                        <td>Source</td>
+                        <td>Error Code</td>
+                        <td>Message</td>
+                        <td>Stack Trace</td>
+                        <td>Status</td>
+                        <td>Date Time</td>
+                        <td>Download</td>
+                        <td>#</td>
+                        <td>Action</td>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor="let error of logDetails">
+                        <td>{{error.source}}</td>
+                        <td style="width: 10%;">{{error.errorCode}}</td>
+                        <td>{{error.message}}</td>
+                        <td>
+                            <ion-icon class="downloadIcon" (click)="openModal(error)"
+                                title="Click here to see more details" name="document-text-outline"></ion-icon>
+                        </td>
+                        <td style="width: 10%;">
+                            <span class="status" [class.pending]="error.status === 'Pending'"
+                                [class.resolved]="error.status === 'Resolved'"
+                                [class.inProgress]="error.status === 'In Progress'">
+                                {{ error.status }}</span>
+
+                        </td>
+                        <td style="width: 12%;">{{error.dateTime | date:'dd-MM-yyyy HH:mm' }}</td>
+                        <td>
+                            <ion-icon class="downloadIcon" *ngIf="error.canDownloadDb" (click)="download(error)"
+                                title="Click here to download database to analye further"
+                                name="arrow-down-circle-outline"></ion-icon>
+                        </td>
+                        <td>
+                            <ion-icon class="downloadIcon" (click)="createBug(error)"
+                                title="Click here create bug to the TFS board" name="bug-outline"></ion-icon>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="dropbtn">Options</button>
+                                <div class="dropdown-content">
+                                    <a (click)="changeStatus('In Progress')">In Progress</a>
+                                    <a (click)="changeStatus('Pending')">Pending</a>
+                                    <a (click)="changeStatus('Delivered')">Delivered</a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
